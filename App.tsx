@@ -1,20 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MainStackNavigator } from './src/navigation/StackNavigator';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+  //! chua on dinh
+  // const [firstLaunch, setFirstLaunch] = React.useState(null);
+  // React.useEffect(() => {
+  //   async function setData() {
+  //     const appData = await AsyncStorage.getItem("appLaunched");
+  //     if (appData == null) {
+  //       setFirstLaunch(true);
+  //       AsyncStorage.setItem("appLaunched", "false");
+  //     } else {
+  //       setFirstLaunch(false);
+  //     }
+  //   }
+  //   setData();
+  // }, []);
+
+  // return (
+  //   firstLaunch != null && (
+  //     <NavigationContainer>
+  //       <Stack.Navigator>
+  //         {firstLaunch && (
+  //           <Stack.Screen
+  //             options={{ headerShown: false }}
+  //             name="Onboarding"
+  //             component={Onboarding}
+  //           />
+  //         )}
+  //         <Stack.Screen name="Home" component={Home} />
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+  //   )
+  // );
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <MainStackNavigator></MainStackNavigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
