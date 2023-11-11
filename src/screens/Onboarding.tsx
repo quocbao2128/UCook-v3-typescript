@@ -1,18 +1,9 @@
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { OnboardFlow } from 'react-native-onboard';
 import { useFonts, VarelaRound_400Regular } from '@expo-google-fonts/varela-round';
 import AppLoading from 'expo-app-loading';
 
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    baseText: {
-        fontFamily: 'VarelaRound_400Regular'
-    }
-});
 
 const Onboarding = () => {
     const navigation = useNavigation();
@@ -33,35 +24,56 @@ const Onboarding = () => {
         return (
             <View style={styles.container}>
                 <OnboardFlow
-                    type='fullscreen' // Change to either 'fullscreen', 'bottom-sheet', or 'inline'
+                    type='fullscreen'
                     showDismissButton={!!'false'}
                     onDone={handleNavigate}
-                    primaryButtonTextStyle={styles.baseText}
+                    primaryButtonTextStyle={[styles.baseText]}
+                    primaryButtonStyle={styles.primaryButton}
+                    titleStyle={styles.baseText}
+                    subtitleStyle={styles.baseText}
                     pages={[
                         {
+                            id: '0',
                             title: 'Nhận dạng nguyên liệu',
-                            subtitle: 'Hãy cho tôi thấy nguyên liệu bạn cần nấu ăn, sau đó tôi sẽ cung cấp cho bạn danh sách món ăn dựa trên nguyên liệu đó.',
-                            textStyle: styles.baseText,
-                            imageUri: Image.resolveAssetSource(require('../img/UCook__2_-removebg-preview.png')).uri
+                            subtitle: 'Tôi sẽ gợi ý các món ăn dựa trên nguyên liệu bạn yêu cầu.',
+                            imageUri: Image.resolveAssetSource(require('../img/UCook__2_-removebg-preview.png')).uri,
+                            primaryButtonTitle: 'Tiếp tục'
                         },
                         {
+                            id: '1',
                             title: 'Lựa chọn món ăn',
-                            subtitle: 'Chọn món từ danh sách các món ăn để xem chi tiết cách nấu.',
-                            textStyle: styles.baseText,
-                            imageUri: Image.resolveAssetSource(require('../img/UCook__3_-removebg-preview.png')).uri
+                            subtitle: 'Chọn một món từ danh sách các món ăn để xem chi tiết cách nấu.',
+                            imageUri: Image.resolveAssetSource(require('../img/UCook__3_-removebg-preview.png')).uri,
+                            primaryButtonTitle: 'Tiếp tục'
                         },
                         {
-                            title: 'Bắt đầu nấu thôi nào',
-                            subtitle: 'Các bước chuẩn bị đã xong, vào bếp nấu ngay thôi.',
-                            textStyle: styles.baseText,
-                            imageUri: Image.resolveAssetSource(require('../img/UCook__4_-removebg-preview.png')).uri
+                            id: '2',
+                            title: 'Sẵn sàng vào bếp',
+                            subtitle: 'Các bước chuẩn bị đã hoàn tất, vào bếp nấu ngay thôi.',
+                            imageUri: Image.resolveAssetSource(require('../img/UCook__4_-removebg-preview.png')).uri,
+                            primaryButtonTitle: 'Bắt đầu'
                         }
                     ]}
-
                 />
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    baseText: {
+        fontFamily: 'VarelaRound_400Regular',
+        fontWeight: '500',
+    },
+    primaryButton: {
+        backgroundColor: '#DDAD68'
+    },
+    primaryText: {
+        color: 'black'
+    }
+});
 
 export default Onboarding;

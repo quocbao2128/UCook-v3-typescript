@@ -2,12 +2,18 @@ import 'react-native-gesture-handler';
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MainStackNavigator } from './src/navigation/StackNavigator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  return (
+    <NavigationContainer>
+      <MainStackNavigator></MainStackNavigator>
+    </NavigationContainer>
+  );
+
   //! chua on dinh
   // const [firstLaunch, setFirstLaunch] = React.useState(null);
   // React.useEffect(() => {
@@ -39,10 +45,6 @@ const App = () => {
   //     </NavigationContainer>
   //   )
   // );
-  return (
-    <NavigationContainer>
-      <MainStackNavigator></MainStackNavigator>
-    </NavigationContainer>
-  );
 }
+
 export default App

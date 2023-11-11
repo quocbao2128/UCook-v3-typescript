@@ -3,6 +3,7 @@ import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput } from "
 import { useFonts, VarelaRound_400Regular } from '@expo-google-fonts/varela-round';
 import AppLoading from 'expo-app-loading';
 
+
 const Home = () => {
     const [text, onChangeText] = React.useState('');
     let [fontsLoaded] = useFonts({
