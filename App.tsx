@@ -5,6 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { MainStackNavigator } from './src/navigation/StackNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+//* De chay bang may ao android, chay lenh: 
+//* npm run android
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -15,6 +18,7 @@ const App = () => {
   );
 
   //! chua on dinh
+  //! chi hien thi cac trang onboarding khi chay app lan dau
   // const [firstLaunch, setFirstLaunch] = React.useState(null);
   // React.useEffect(() => {
   //   async function setData() {

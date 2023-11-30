@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput } from "react-native";
-import { useFonts, VarelaRound_400Regular } from '@expo-google-fonts/varela-round';
+import { useFonts, Nunito_400Regular } from '@expo-google-fonts/nunito';
 import AppLoading from 'expo-app-loading';
 
 
 const Home = () => {
     const [text, onChangeText] = React.useState('');
     let [fontsLoaded] = useFonts({
-        VarelaRound_400Regular,
+        Nunito_400Regular,
     });
     if (!fontsLoaded) {
         return <AppLoading />;
@@ -19,7 +19,7 @@ const Home = () => {
                 </View>
                 <View style={styles.middle}>
                     <Text style={styles.baseText}>Bạn muốn tìm nguyên liệu bằng cách nào ?</Text>
-                    <Button title="Sử sụng camera điện thoại" />
+                    <Button title="Sử sụng camera điện thoại" color={styles.button.color} />
                     <Text style={styles.baseText}>Hoặc</Text>
                     <SafeAreaView >
                         <TextInput
@@ -78,12 +78,13 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20,
     },
     baseText: {
-        fontFamily: 'VarelaRound_400Regular',
+        fontFamily: 'Nunito_400Regular',
         textAlign: "center"
     },
     button: {
-        fontFamily: 'VarelaRound_400Regular'
-    }
+        fontFamily: 'Nunito_400Regular',
+        color: '#D08D2F'
+    },
 });
 
 export default Home;
