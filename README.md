@@ -10,6 +10,9 @@
 
 # How to run:
 
-- Run with Expo Go app: `npm expo start`
+Method 1: Run with Expo Go app
+   `npm expo start`
+- Scan the QR code above with Expo Go (Android) or the Camera app (iOS).
 
-- Run with Android Studio (create an Android simulator device first): `npm run android`
+Method 2: Run with Android Studio (create an Android simulator device first)
+   `npm run android`
