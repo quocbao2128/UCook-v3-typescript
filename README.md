@@ -12,7 +12,7 @@
 
 Method 1: Run with Expo Go app
    `npm expo start`
-Then, scan the QR code with Expo Go (Android) or the Camera app (iOS).
+- Then, scan the QR code with Expo Go (Android) or the Camera app (iOS).
 
 Method 2: Run with Android Studio (create an Android simulator device first)
    `npm run android`
