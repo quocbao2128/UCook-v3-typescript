@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput } from "react-native";
 import { useFonts, Nunito_400Regular } from '@expo-google-fonts/nunito';
 import AppLoading from 'expo-app-loading';
+import { openCamera } from "./CameraCapture";
+import { useNavigation } from '@react-navigation/native';
 
 
 const Home = () => {
+    const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
+    const [image, setImage] = useState<string | null>(null);
+
+    const pickImage = async () => {
+        const uri = await openCamera();
+        if (uri) {
+          setImage(uri);
+          handleNavigate();
+        }
+      };
+
+    const handleNavigate = () => {
+        navigation.navigate('Danh sách món ăn' as never);
+    };
     let [fontsLoaded] = useFonts({
         Nunito_400Regular,
     });
@@ -19,7 +35,7 @@ const Home = () => {
                 </View>
                 <View style={styles.middle}>
                     <Text style={styles.baseText}>Bạn muốn tìm nguyên liệu bằng cách nào ?</Text>
-                    <Button title="Sử sụng camera điện thoại" color={styles.button.color} />
+                    <Button title="Sử sụng camera điện thoại" color={styles.button.color} onPress={pickImage}/>
                     <Text style={styles.baseText}>Hoặc</Text>
                     <SafeAreaView >
                         <TextInput
@@ -29,6 +45,7 @@ const Home = () => {
                             placeholder="Nhập một tên nguyên liệu vào đây"
                         />
                     </SafeAreaView>
+                    <Button title="Tìm" color={styles.button.color} onPress={handleNavigate}/>
                 </View>
             </View>
         );
