@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
-import { FileSystem } from 'expo';
+import * as FileSystem from 'expo-file-system';
 const loadRecipe = async () => {
-    try {
-      const content = await FileSystem.readAsStringAsync('..src/img/cong-thuc-mon-an.txt');
-      // Use the content in your scroll view, e.g., with Text component
-    } catch (error) {
-      console.error(error);
-    }
-  };
-const Recipe =() =>{
-    const [recipeContent, setRecipeContent] = useState('');
+  let content;
+  try {
+    content = await FileSystem.readAsStringAsync('../img/cong-thuc-mon-an.txt', { encoding: 'utf8' });
+    // Use the content in your scroll view, e.g., with Text component
+    console.log(content);
+  } catch (error) {
+    console.error('>>>ERR', error);
+  }
+  return content;
+};
+const Recipe = () => {
+  const [recipeContent, setRecipeContent] = useState('');
 
   useEffect(() => {
     loadRecipe().then(content => setRecipeContent(content));

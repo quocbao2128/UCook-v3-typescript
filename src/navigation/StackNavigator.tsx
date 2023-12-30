@@ -10,11 +10,10 @@ const Stack = createStackNavigator();
 
 const MainStackNavigator = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Danh sách món ăn" component={DishList} options={{ headerShown: false }}/>
-            <Stack.Screen name="Recipe" component={Recipe}/>
+            <Stack.Screen name="Danh sách món ăn" component={DishList} />
+            <Stack.Screen name="Recipe" component={Recipe} />
         </Stack.Navigator>
     );
 }
