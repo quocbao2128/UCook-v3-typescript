@@ -1,17 +1,54 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useFonts, Nunito_400Regular } from '@expo-google-fonts/nunito';
 import AppLoading from 'expo-app-loading';
 import { useNavigation } from '@react-navigation/native';
+import * as FileSystem from 'expo-file-system';
+
+type Dish = {
+    id: number;
+    name: string;
+    imageUri: string;
+}
 
 const DishList = () =>{
-    const buttons = [
-        { key: '1',text: 'Cà chua sốt Cá hồi', image: require('../img/ca-chua-sot-ca-hoi.jpg') },
-        { key: '2',text: 'Cà chua sốt mì Ý thịt bò', image: require('../img/ca-chua-sot-mi-y-thit-bo.jpg') },
-        { key: '3',text: 'Canh cà chua', image: require('../img/canh-ca-chua.jpg')},
-        { key: '4',text: 'Canh chua cá lóc',image: require('../img/canh-chua-ca-loc.jpg')}
-      ];
-      const navigation = useNavigation();
+    const navigation = useNavigation();
+    const [dishes, setDishes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    let hasError = false;
+    let dishesData = [];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList/1');
+                const data = await response.json();
+                dishesData = data.dishes;
+                await Promise.all(dishesData.map(async (dish: Dish) => {
+                      const filename = `dish_${dish.id}.jpg`;
+                      const filePath = FileSystem.cacheDirectory + filename;
+                      const info = await FileSystem.getInfoAsync(filePath);
+                      if(!info.exists){
+                        await FileSystem.downloadAsync(
+                            `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
+                            filePath
+                          )
+                            .then(({ uri }) => {
+                              console.log('Finished downloading to ', uri);
+                              dish.imageUri = filePath;
+                            })
+                      }
+                    })
+                  );
+                setDishes(dishesData);
+            } catch (error) {
+                console.log(error);
+                hasError = true;
+            } finally {
+                setIsLoading(false);
+            }
+    };
+        fetchData();
+    }, []);
       const backToHome = () => {
         navigation.navigate('Home' as never);
         };
@@ -19,7 +56,7 @@ const DishList = () =>{
         navigation.navigate('Recipe' as never)
       }
         let [fontsLoaded] = useFonts({Nunito_400Regular,});
-        if(!fontsLoaded){
+        if(!fontsLoaded || isLoading){
             return <AppLoading/>
         } else {
             return(
@@ -30,7 +67,7 @@ const DishList = () =>{
                     </View>
                 
                     <ScrollView style={{ flex: 1}}>
-                        {buttons.map((button) => (
+                        {dishes.map((dish) => (
                         <TouchableOpacity style={{
                             width: 350, // adjust width and height as needed
                             height: 200, // adjust height as needed
@@ -41,9 +78,9 @@ const DishList = () =>{
                             margin: 10, // adds 10px space around the button
                           }}
                           onPress={goToRecipe}
-                        key={button.key}
+                        key={dish.id}
                           >
-                            <Image source={button.image} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
+                            <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
                             <Text style={{
                                 position: 'absolute',
                                 bottom: 10, // adjust for desired padding
@@ -55,7 +92,7 @@ const DishList = () =>{
                                 textShadowRadius: 3, // outline width
                                 fontSize:15,
                                 }}>
-                                    {button.text}
+                                    {dish.name}
                             </Text> 
                           </TouchableOpacity>
                         ))}
