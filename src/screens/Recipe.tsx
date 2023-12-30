@@ -36,7 +36,7 @@ const Recipe = () => {
 
   // if (!recipeContent) return <Text>Loading recipe...</Text>;
   const navigation = useNavigation();
-  const backToHome = () => {
+  const backToDishList = () => {
     navigation.navigate('DishList' as never);
     };
 
@@ -64,7 +64,7 @@ const Recipe = () => {
           bottom: 50, // adjust for desired padding
           left: 20, // adjust for desired padding
           zIndex: 10, // ensure text overlaps image
-            }} onPress={backToHome}>
+            }} onPress={backToDishList}>
           <Image source={require('../img/leftArrow.png')} style={{width: '100%', height: '100%',resizeMode:'contain'}}/>
         </TouchableOpacity>
     </View>
