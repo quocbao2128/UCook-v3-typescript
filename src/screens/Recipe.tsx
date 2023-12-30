@@ -1,31 +1,18 @@
-import React from "react";
-import { Text, ScrollView } from "react-native";
-import {Asset} from 'expo-asset';
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import * as FileSystem from 'expo-file-system';
-import {useState,useEffect} from 'react';
-// import * from './src/recipes/cong-thuc-nau-an';
-
-const loadRecipe = async () => {
-    try {
-      // const asset = Asset.fromModule(require())
-      const uri = './src/recipes/cong-thuc-mon-an.txt';
-      console.log(uri);
-      const fileInfo = await FileSystem.getInfoAsync(uri);
-      if(fileInfo.exists){
-      //   const [{ localUri }] = await Asset.loadAsync(uri);
-      //   if(localUri)
-          return FileSystem.readAsStringAsync(uri);
-      }
-      else
-      {
-        console.log("file not exist:" + fileInfo.uri)
-      }
-      return
-    } catch (error) {
-      console.error(error);
-    }
-  };
-const Recipe =() =>{
+// const loadRecipe = async () => {
+//   let content;
+//   try {
+//     content = await FileSystem.readAsStringAsync('../img/cong-thuc-mon-an.txt', { encoding: 'utf8' });
+//     // Use the content in your scroll view, e.g., with Text component
+//     console.log(content);
+//   } catch (error) {
+//     console.error('>>>ERR', error);
+//   }
+//   return content;
+// };
+const Recipe = () => {
   // const [recipeContent, setRecipeContent] = useState('');
 
   // useEffect(() => {

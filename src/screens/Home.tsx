@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput } from "react-native";
-import { useFonts, Nunito_400Regular } from '@expo-google-fonts/nunito';
+import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput, Pressable } from "react-native";
+import { useFonts, Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito';
 import AppLoading from 'expo-app-loading';
 import { openCamera } from "./CameraCapture";
 import { useNavigation } from '@react-navigation/native';
-
 
 const Home = () => {
     const navigation = useNavigation();
@@ -14,29 +13,31 @@ const Home = () => {
     const pickImage = async () => {
         const uri = await openCamera();
         if (uri) {
-          setImage(uri);
-          handleNavigate();
+            setImage(uri);
+            handleNavigate();
         }
-      };
+    };
 
     const handleNavigate = () => {
         navigation.navigate('Danh sách món ăn' as never);
     };
     let [fontsLoaded] = useFonts({
-        Nunito_400Regular,
+        Nunito_400Regular, Nunito_600SemiBold
     });
     if (!fontsLoaded) {
         return <AppLoading />;
     } else {
         return (
             <View style={styles.center}>
-                <View style={styles.top}>
-                    <Image source={require('../img/UCook-removebg.png')} style={styles.logo} />
-                </View>
                 <View style={styles.middle}>
                     <Text style={styles.baseText}>Bạn muốn tìm nguyên liệu bằng cách nào ?</Text>
-                    <Button title="Sử sụng camera điện thoại" color={styles.button.color} onPress={pickImage}/>
-                    <Text style={styles.baseText}>Hoặc</Text>
+                    <Pressable style={styles.button}
+                        onPress={pickImage}>
+                        <Text style={[styles.baseText, styles.buttonText]}>
+                            Sử dụng camera điện thoại
+                        </Text>
+                    </Pressable>
+                    {/* <Text style={styles.baseText}>Hoặc</Text>
                     <SafeAreaView >
                         <TextInput
                             style={[styles.input, styles.baseText, { height: 50 }]}
@@ -44,8 +45,8 @@ const Home = () => {
                             value={text}
                             placeholder="Nhập một tên nguyên liệu vào đây"
                         />
-                    </SafeAreaView>
-                    <Button title="Tìm" color={styles.button.color} onPress={handleNavigate}/>
+                    </SafeAreaView> */}
+                    {/* <Button title="Tìm" color={styles.button.color} onPress={handleNavigate} /> */}
                 </View>
             </View>
         );
@@ -56,7 +57,9 @@ const styles = StyleSheet.create({
     center: {
         flex: 1,
         justifyContent: 'space-between',
-        alignItems: "center"
+        alignItems: "center",
+        borderWidth: 1,
+        marginTop: '15%',
         // backgroundColor: '#fff',
         // padding: 20,
         // margin: 10,
@@ -88,20 +91,35 @@ const styles = StyleSheet.create({
         // borderWidth: 5,
     },
     bottom: {
-        flex: 0.1,
-        backgroundColor: 'pink',
-        borderWidth: 5,
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
+        // flex: 0.1,
+        // backgroundColor: 'pink',
+        // borderWidth: 5,
+        // borderBottomLeftRadius: 20,
+        // borderBottomRightRadius: 20,
+        marginTop: '65%',
+        borderWidth: 1,
+        height: '15%',
     },
     baseText: {
+        fontSize: 17,
         fontFamily: 'Nunito_400Regular',
-        textAlign: "center"
+        textAlign: "center",
     },
     button: {
-        fontFamily: 'Nunito_400Regular',
-        color: '#D08D2F'
+        // fontFamily: 'Nunito_400Regular',
+        // color: '#D08D2F',
+        backgroundColor: '#D08D2F',
+        width: "auto",
+        height: "50%",
+        borderWidth: 1,
+        borderRadius: 50,
+        justifyContent: "center",
+        marginTop: "auto",
     },
+    buttonText: {
+        color: "white",
+        fontFamily: "Nunito_600SemiBold",
+    }
 });
 
 export default Home;
