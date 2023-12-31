@@ -14,9 +14,9 @@ export const openCamera = async (): Promise<string | null> => {
     quality: 1,
   });
 
-  if (result.cancelled) {
+  if (result.canceled) {
     return null;
   }
 
-  return result.uri;
+  return result.assets[0].uri;
 };
