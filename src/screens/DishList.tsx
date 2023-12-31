@@ -1,10 +1,9 @@
 import React,{useEffect,useState} from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
-import { useFonts, Nunito_400Regular } from '@expo-google-fonts/nunito';
-import AppLoading from 'expo-app-loading';
 import { useNavigation } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
-
+import useStore from "../ZuStand/useStore";
+import * as FormData from 'form-data';
 type Dish = {
     id: number;
     name: string;
@@ -12,6 +11,7 @@ type Dish = {
 }
 
 const DishList = () =>{
+    const {sharedValue,updateSharedValue} = useStore();
     const navigation = useNavigation();
     const [dishes, setDishes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +52,8 @@ const DishList = () =>{
       const backToHome = () => {
         navigation.navigate('Home' as never);
         };
-      const goToRecipe = () =>{
+      const goToRecipe = (id) =>{
+        updateSharedValue(id)
         navigation.navigate('Recipe' as never)
       }
         // let [fontsLoaded] = useFonts({Nunito_400Regular,});
@@ -70,7 +71,7 @@ const DishList = () =>{
                 </View>
             
                 <ScrollView style={{ flex: 1}}>
-                    {dishes.map((dish) => (
+                    {dishes.map((dish : Dish) => (
                     <TouchableOpacity style={{
                         width: 350, // adjust width and height as needed
                         height: 200, // adjust height as needed
@@ -80,7 +81,7 @@ const DishList = () =>{
                         alignItems: 'flex-start', // align text to left
                         margin: 10, // adds 10px space around the button
                       }}
-                      onPress={goToRecipe}
+                      onPress={()=>goToRecipe(dish.id)}
                     key={dish.id}
                       >
                         <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
@@ -92,7 +93,7 @@ const DishList = () =>{
                             textAlign: 'left',
                             color:'white',
                             textShadowColor: 'black', // outline color
-                            textShadowRadius: 3, // outline width
+                            textShadowRadius: 5, // outline width
                             fontSize:15,
                             }}>
                                 {dish.name}
