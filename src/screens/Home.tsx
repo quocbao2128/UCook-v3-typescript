@@ -19,7 +19,7 @@ const Home = () => {
     };
 
     const handleNavigate = () => {
-        navigation.navigate('Danh sách món ăn' as never);
+        navigation.navigate('DishList' as never);
     };
 
     const hanldeTextInput = () => {
