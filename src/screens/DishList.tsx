@@ -27,7 +27,7 @@ const DishList = () =>{
                       const filename = `dish_${dish.id}.jpg`;
                       const filePath = FileSystem.cacheDirectory + filename;
                       const info = await FileSystem.getInfoAsync(filePath);
-                      if(!info.exists){
+                    //   if(!info.exists){
                         await FileSystem.downloadAsync(
                             `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
                             filePath
@@ -36,7 +36,7 @@ const DishList = () =>{
                               console.log('Finished downloading to ', uri);
                               dish.imageUri = filePath;
                             })
-                      }
+                    //   }
                     })
                   );
                 setDishes(dishesData);
@@ -55,67 +55,69 @@ const DishList = () =>{
       const goToRecipe = () =>{
         navigation.navigate('Recipe' as never)
       }
-        let [fontsLoaded] = useFonts({Nunito_400Regular,});
-        if(!fontsLoaded || isLoading){
-            return <AppLoading/>
-        } else {
-            return(
-                <View style={styles.center}>
-                    <View style={{height: 100}}/>
-                    <View>
-                        <Text style={styles.baseText}>Danh sách các món ăn dựa trên nguyên liệu</Text>
-                    </View>
-                
-                    <ScrollView style={{ flex: 1}}>
-                        {dishes.map((dish) => (
-                        <TouchableOpacity style={{
-                            width: 350, // adjust width and height as needed
-                            height: 200, // adjust height as needed
-                            borderRadius: 50, // adjust for desired roundness
-                            backgroundColor: '#fff', // change background color if needed
-                            justifyContent: 'center', // center vertically
-                            alignItems: 'flex-start', // align text to left
-                            margin: 10, // adds 10px space around the button
-                          }}
-                          onPress={goToRecipe}
-                        key={dish.id}
-                          >
-                            <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
-                            <Text style={{
-                                position: 'absolute',
-                                bottom: 10, // adjust for desired padding
-                                left: 10, // adjust for desired padding
-                                zIndex: 10, // ensure text overlaps image
-                                textAlign: 'left',
-                                color:'white',
-                                textShadowColor: 'black', // outline color
-                                textShadowRadius: 3, // outline width
-                                fontSize:15,
-                                }}>
-                                    {dish.name}
-                            </Text> 
-                          </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                    <TouchableOpacity style={{
-                        position: 'absolute',
-                        width: 70,
-                        height: 70,
-                        borderRadius: 35,
-                        backgroundColor: '#fff',
-                        borderWidth: 2,
-                        borderColor: '#ff5722',
-                        padding: 10,
-                        bottom: 50, // adjust for desired padding
-                        left: 20, // adjust for desired padding
-                        zIndex: 10, // ensure text overlaps image
-                        }} onPress={backToHome}>
-                            <Image source={require('../img/leftArrow.png')} style={{width: '100%', height: '100%',resizeMode:'contain'}}/>
-                    </TouchableOpacity>
-                    <View style={{height:30}}/>
+        // let [fontsLoaded] = useFonts({Nunito_400Regular,});
+        // if(!fontsLoaded || isLoading){
+        //     return <AppLoading/>
+        // } else {
+            
+        // }
+
+        return(
+            <View style={styles.center}>
+                <View style={{height: 100}}/>
+                <View>
+                    <Text style={styles.baseText}>Danh sách các món ăn dựa trên nguyên liệu</Text>
                 </View>
-            );
-        }
+            
+                <ScrollView style={{ flex: 1}}>
+                    {dishes.map((dish) => (
+                    <TouchableOpacity style={{
+                        width: 350, // adjust width and height as needed
+                        height: 200, // adjust height as needed
+                        borderRadius: 50, // adjust for desired roundness
+                        backgroundColor: '#fff', // change background color if needed
+                        justifyContent: 'center', // center vertically
+                        alignItems: 'flex-start', // align text to left
+                        margin: 10, // adds 10px space around the button
+                      }}
+                      onPress={goToRecipe}
+                    key={dish.id}
+                      >
+                        <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
+                        <Text style={{
+                            position: 'absolute',
+                            bottom: 10, // adjust for desired padding
+                            left: 10, // adjust for desired padding
+                            zIndex: 10, // ensure text overlaps image
+                            textAlign: 'left',
+                            color:'white',
+                            textShadowColor: 'black', // outline color
+                            textShadowRadius: 3, // outline width
+                            fontSize:15,
+                            }}>
+                                {dish.name}
+                        </Text> 
+                      </TouchableOpacity>
+                    ))}
+                </ScrollView>
+                <TouchableOpacity style={{
+                    position: 'absolute',
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
+                    backgroundColor: '#fff',
+                    borderWidth: 2,
+                    borderColor: '#ff5722',
+                    padding: 10,
+                    bottom: 50, // adjust for desired padding
+                    left: 20, // adjust for desired padding
+                    zIndex: 10, // ensure text overlaps image
+                    }} onPress={backToHome}>
+                        <Image source={require('../img/leftArrow.png')} style={{width: '100%', height: '100%',resizeMode:'contain'}}/>
+                </TouchableOpacity>
+                <View style={{height:30}}/>
+            </View>
+        );
 }
 const styles = StyleSheet.create({
     center: {
