@@ -10,55 +10,49 @@ const Home = () => {
     const [text, onChangeText] = React.useState('');
     const [image, setImage] = useState<string | null>(null);
 
-    const pickImage = async () => {
-        const uri = await openCamera();
-        if (uri) {
-            setImage(uri);
-            handleNavigate();
-        }
+    // const pickImage = async () => {
+    //     const uri = await openCamera();
+    //     if (uri) {
+    //         setImage(uri);
+    //         handleNavigate();
+    //     }
+    // };
+
+    const handleNavigate = (toPage: string) => {
+        navigation.navigate(toPage as never);
     };
 
-    const handleNavigate = () => {
-        navigation.navigate('DishList' as never);
-    };
-
-    const hanldeTextInput = () => {
+    const handleSubmit = () => {
         //* TODO: call API to get dish list by text input value
         console.log('>>>text input value:', text);
         Keyboard.dismiss();
+        //* if does not recognize the ingredients of empty text input
+        if (!text) {
+            handleNavigate('NotIdentifiable');
+        } else {
+            //* else go to Dish list screen
+            handleNavigate('DishList');
+        }
     };
-    // let [fontsLoaded] = useFonts({
-    //     Nunito_400Regular, Nunito_600SemiBold
-    // });
-
-    // const onLayoutRootView = useCallback(async () => {
-    //     if (fontsLoaded) {
-    //         await SplashScreen.hideAsync();
-    //     }
-    // }, [fontsLoaded]);
-
-    // if (!fontsLoaded) {
-    //     return null;
-    // } else {
     return (
         <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.outer}>
             <ImageBackground source={require('../img/ingedients-img_waifu2x_3x_1n_png.png')} resizeMode='stretch' style={styles.image}>
                 <View style={styles.innerView}>
                     <View style={styles.title}>
                         <View style={styles.titleOption}>
-                            <Text style={[styles.baseText, styles.titleText]}>Bạn muốn tìm nguyên liệu bằng cách nào?</Text>
+                            <Text style={[styles.baseText, styles.titleText]}>{'Bạn muốn tìm nguyên liệu bằng cách nào?'}</Text>
                         </View>
                         <View style={styles.usecameraBtn}>
                             <Pressable style={styles.button}
-                                onPress={pickImage}>
+                                onPress={() => handleNavigate('CameraCaptureNote')}>
                                 <Text style={[styles.baseText, styles.buttonText]}>
-                                    Sử dụng camera điện thoại
+                                    {'Sử dụng camera điện thoại'}
                                 </Text>
                             </Pressable>
                         </View>
                     </View>
                     <View style={styles.orView}>
-                        <Text style={[styles.baseText, styles.orText]}>hoặc</Text>
+                        <Text style={[styles.baseText, styles.orText]}>{'hoặc'}</Text>
                     </View>
                     <View style={styles.bottom}>
                         <ScrollView keyboardShouldPersistTaps='always' style={styles.safeView}>
@@ -74,7 +68,7 @@ const Home = () => {
                         </ScrollView>
                         <View style={styles.searchView}>
                             <Pressable style={[styles.button, styles.searchBtn]}
-                                onPress={hanldeTextInput}>
+                                onPress={handleSubmit}>
                                 <Icon name="search1" size={20} color="white" style={styles.searchIcon} />
                             </Pressable>
                         </View>

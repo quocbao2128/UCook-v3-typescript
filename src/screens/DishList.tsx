@@ -1,9 +1,10 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import { useFonts, Nunito_400Regular } from '@expo-google-fonts/nunito';
 import AppLoading from 'expo-app-loading';
 import { useNavigation } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 type Dish = {
     id: number;
@@ -11,7 +12,7 @@ type Dish = {
     imageUri: string;
 }
 
-const DishList = () =>{
+const DishList = () => {
     const navigation = useNavigation();
     const [dishes, setDishes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -24,21 +25,21 @@ const DishList = () =>{
                 const data = await response.json();
                 dishesData = data.dishes;
                 await Promise.all(dishesData.map(async (dish: Dish) => {
-                      const filename = `dish_${dish.id}.jpg`;
-                      const filePath = FileSystem.cacheDirectory + filename;
-                      const info = await FileSystem.getInfoAsync(filePath);
+                    const filename = `dish_${dish.id}.jpg`;
+                    const filePath = FileSystem.cacheDirectory + filename;
+                    const info = await FileSystem.getInfoAsync(filePath);
                     //   if(!info.exists){
-                        await FileSystem.downloadAsync(
-                            `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
-                            filePath
-                          )
-                            .then(({ uri }) => {
-                              console.log('Finished downloading to ', uri);
-                              dish.imageUri = filePath;
-                            })
+                    await FileSystem.downloadAsync(
+                        `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
+                        filePath
+                    )
+                        .then(({ uri }) => {
+                            console.log('Finished downloading to ', uri);
+                            dish.imageUri = filePath;
+                        })
                     //   }
-                    })
-                  );
+                })
+                );
                 setDishes(dishesData);
             } catch (error) {
                 console.log(error);
@@ -46,31 +47,31 @@ const DishList = () =>{
             } finally {
                 setIsLoading(false);
             }
-    };
+        };
         fetchData();
     }, []);
-      const backToHome = () => {
+    const backToHome = () => {
         navigation.navigate('Home' as never);
-        };
-      const goToRecipe = () =>{
+    };
+    const goToRecipe = () => {
         navigation.navigate('Recipe' as never)
-      }
-        // let [fontsLoaded] = useFonts({Nunito_400Regular,});
-        // if(!fontsLoaded || isLoading){
-        //     return <AppLoading/>
-        // } else {
-            
-        // }
+    }
+    // let [fontsLoaded] = useFonts({Nunito_400Regular,});
+    // if(!fontsLoaded || isLoading){
+    //     return <AppLoading/>
+    // } else {
 
-        return(
-            <View style={styles.center}>
-                <View style={{height: 100}}/>
-                <View>
-                    <Text style={styles.baseText}>Danh sách các món ăn dựa trên nguyên liệu</Text>
-                </View>
-            
-                <ScrollView style={{ flex: 1}}>
-                    {dishes.map((dish) => (
+    // }
+
+    return (
+        <View style={styles.center}>
+            <View style={{ height: 100 }} />
+            <View style={styles.title}>
+                <Text style={[styles.baseText, styles.titleText]}>Danh sách các món ăn dựa trên nguyên liệu</Text>
+            </View>
+
+            <ScrollView style={{ flex: 1 }}>
+                {dishes.map((dish: Dish) => (
                     <TouchableOpacity style={{
                         width: 350, // adjust width and height as needed
                         height: 200, // adjust height as needed
@@ -79,45 +80,48 @@ const DishList = () =>{
                         justifyContent: 'center', // center vertically
                         alignItems: 'flex-start', // align text to left
                         margin: 10, // adds 10px space around the button
-                      }}
-                      onPress={goToRecipe}
-                    key={dish.id}
-                      >
-                        <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
+                    }}
+                        onPress={goToRecipe}
+                        key={dish.id}
+                    >
+                        <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch', borderRadius: 20, }} />
                         <Text style={{
                             position: 'absolute',
                             bottom: 10, // adjust for desired padding
                             left: 10, // adjust for desired padding
                             zIndex: 10, // ensure text overlaps image
                             textAlign: 'left',
-                            color:'white',
+                            color: 'white',
                             textShadowColor: 'black', // outline color
                             textShadowRadius: 3, // outline width
-                            fontSize:15,
-                            }}>
-                                {dish.name}
-                        </Text> 
-                      </TouchableOpacity>
-                    ))}
-                </ScrollView>
-                <TouchableOpacity style={{
-                    position: 'absolute',
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
-                    backgroundColor: '#fff',
-                    borderWidth: 2,
-                    borderColor: '#ff5722',
-                    padding: 10,
-                    bottom: 50, // adjust for desired padding
-                    left: 20, // adjust for desired padding
-                    zIndex: 10, // ensure text overlaps image
-                    }} onPress={backToHome}>
-                        <Image source={require('../img/leftArrow.png')} style={{width: '100%', height: '100%',resizeMode:'contain'}}/>
-                </TouchableOpacity>
-                <View style={{height:30}}/>
-            </View>
-        );
+                            fontSize: 15,
+                        }}>
+                            {dish.name}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+            <TouchableOpacity style={{
+                position: 'absolute',
+                width: 70,
+                height: 70,
+                borderRadius: 35,
+                backgroundColor: '#fff',
+                borderWidth: 2,
+                borderColor: '#D08D2F',
+                padding: 10,
+                bottom: 50, // adjust for desired padding
+                left: 20, // adjust for desired padding
+                zIndex: 10, // ensure text overlaps image
+                alignItems: 'center',
+                justifyContent: 'center',
+            }} onPress={backToHome}>
+                {/* <Image source={require('../img/leftArrow.png')} style={{ width: '100%', height: '100%', resizeMode: 'contain' }} /> */}
+                <Icon name="arrowleft" size={40} color="#D08D2F" />
+            </TouchableOpacity>
+            <View style={{ height: 30 }} />
+        </View>
+    );
 }
 const styles = StyleSheet.create({
     center: {
@@ -164,7 +168,15 @@ const styles = StyleSheet.create({
     baseText: {
         fontFamily: 'Nunito_400Regular',
         textAlign: "center",
-        fontSize: 20
+        fontSize: 20,
+    },
+    title: {
+        marginTop: '5%',
+        marginBottom: '5%',
+    },
+    titleText: {
+        fontSize: 24,
+        // padding: '90%',
     },
     button: {
         fontFamily: 'Nunito_400Regular',
