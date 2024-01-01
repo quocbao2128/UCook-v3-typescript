@@ -71,7 +71,11 @@ const Home = () => {
                         <Text style={[styles.baseText, styles.orText]}>{'hoặc'}</Text>
                     </View>
                     <View style={styles.bottom}>
-                        <ScrollView keyboardShouldPersistTaps='always' style={styles.safeView}>
+                        <ScrollView
+                            keyboardShouldPersistTaps='always'
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            style={styles.safeView}>
                             <TextInput
                                 style={[styles.baseText, styles.input, { height: 50 }]}
                                 onChangeText={text => onChangeText(text)}
