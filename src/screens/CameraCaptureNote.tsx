@@ -10,7 +10,7 @@ const CameraCaptureNote = () => {
     const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
     const [image, setImage] = useState<string | null>(null);
-    const {sharedValue,updateSharedValue} = useStore();
+    const { sharedValue, updateSharedValue } = useStore();
 
     const pickImage = async () => {
         const uri = await openCamera();
@@ -18,22 +18,30 @@ const CameraCaptureNote = () => {
             setImage(uri);
             const formData = new FormData();
             formData.append('image', {
-            uri: uri, // Assuming filePath holds the correct image path from sharedValue
-            name: `capture.jpg`,
-            type: 'image/jpeg', // Adjust if necessary
+                uri: uri, // Assuming filePath holds the correct image path from sharedValue
+                name: `capture.jpg`,
+                type: 'image/jpeg', // Adjust if necessary
             });
-            const response = await fetch('https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList',{
-                method:'POST',
-                body:formData
+            const response = await fetch('https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList', {
+                method: 'POST',
+                body: formData
             })
-            if(!response.ok){
+            if (!response.ok) {
                 handleNavigate('NotIdentifiable');
             }
-            else{
+            else {
                 const responseData = await response.json();
-                updateSharedValue(responseData);
-                handleNavigate('DishList');
+                const dishes = responseData.dishes;
+                if (dishes === undefined || dishes.length == 0) {
+                    handleNavigate('NotIdentifiable');
+                }
+                else {
+                    updateSharedValue(responseData);
+                    handleNavigate('DishList');
+                }
             }
+        } else {
+            handleNavigate('Home');
         }
     };
 
