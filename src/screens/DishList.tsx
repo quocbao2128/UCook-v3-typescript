@@ -81,7 +81,8 @@ const DishList = () => {
                         alignItems: 'flex-start', // align text to left
                         margin: 10, // adds 10px space around the button
                         overflow: "hidden",
-                        // borderWidth: 1,
+                        borderWidth: 2,
+                        borderColor: '#D08D2F',
                     }}
                         onPress={() => goToRecipe(dish.id)}
                         key={dish.id}
@@ -130,8 +131,8 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff',
         // padding: 20,
         // margin: 10,
-        borderWidth: 1,
-        borderColor: 'red',
+        // borderWidth: 1,
+        // borderColor: 'red',
     },
     tinyLogo: {
         width: 10,
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
     input: {
         height: 40,
         margin: 12,
-        borderWidth: 1,
+        // borderWidth: 1,
         padding: 10,
     },
     top: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     bottom: {
         flex: 0.1,
         backgroundColor: 'pink',
-        borderWidth: 5,
+        // borderWidth: 5,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
     },
