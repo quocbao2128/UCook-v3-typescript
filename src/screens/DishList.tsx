@@ -4,14 +4,18 @@ import { useNavigation } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 import useStore from "../ZuStand/useStore";
 import Icon from 'react-native-vector-icons/AntDesign';
+import TimeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { LinearGradient } from 'expo-linear-gradient';
+
 type Dish = {
     id: number;
     name: string;
     imageUri: string;
+    time: number;
 }
 
-const DishList = () =>{
-    const {sharedValue,updateSharedValue} = useStore();
+const DishList = () => {
+    const { sharedValue, updateSharedValue } = useStore();
     const navigation = useNavigation();
     const [dishes, setDishes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -26,18 +30,17 @@ const DishList = () =>{
                     const filename = `dish_${dish.id}.jpg`;
                     const filePath = FileSystem.cacheDirectory + filename;
                     const info = await FileSystem.getInfoAsync(filePath);
-                    if(!info.exists){
+                    if (!info.exists) {
                         await FileSystem.downloadAsync(
-                        `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
-                        filePath
-                        )  
-                        .then(({ uri }) => {
-                            console.log('Finished downloading to ', uri);
-                            dish.imageUri = filePath;
-                        });
+                            `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
+                            filePath
+                        )
+                            .then(({ uri }) => {
+                                console.log('Finished downloading to ', uri);
+                                dish.imageUri = filePath;
+                            });
                     }
-                    else
-                    {
+                    else {
                         dish.imageUri = filePath;
                     }
                 })
@@ -54,21 +57,15 @@ const DishList = () =>{
     }, []);
     const backToHome = () => {
         navigation.navigate('Home' as never);
-        };
-      const goToRecipe = (id) =>{
+    };
+    const goToRecipe = (id) => {
         updateSharedValue(id)
         navigation.navigate('Recipe' as never)
     }
-    // let [fontsLoaded] = useFonts({Nunito_400Regular,});
-    // if(!fontsLoaded || isLoading){
-    //     return <AppLoading/>
-    // } else {
-
-    // }
 
     return (
         <View style={styles.center}>
-            <View style={{ height: 50 }} />
+            <View style={{ height: '8%' }} />
             <View style={styles.title}>
                 <Text style={[styles.baseText, styles.titleText]}>Danh sách các món ăn dựa trên nguyên liệu</Text>
             </View>
@@ -78,28 +75,27 @@ const DishList = () =>{
                     <TouchableOpacity style={{
                         width: 350, // adjust width and height as needed
                         height: 200, // adjust height as needed
-                        borderRadius: 50, // adjust for desired roundness
+                        borderRadius: 30, // adjust for desired roundness
                         backgroundColor: '#fff', // change background color if needed
                         justifyContent: 'center', // center vertically
                         alignItems: 'flex-start', // align text to left
                         margin: 10, // adds 10px space around the button
-                      }}
-                      onPress={()=>goToRecipe(dish.id)}
-                    key={dish.id}
-                      >
-                        <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch',borderRadius: 20, }} />
-                        <Text style={{
-                            position: 'absolute',
-                            bottom: 10, // adjust for desired padding
-                            left: 10, // adjust for desired padding
-                            zIndex: 10, // ensure text overlaps image
-                            textAlign: 'left',
-                            color: 'white',
-                            textShadowColor: 'black', // outline color
-                            textShadowRadius: 3, // outline width
-                            fontSize: 15,
-                        }}>
-                            {dish.name}
+                        overflow: "hidden",
+                        // borderWidth: 1,
+                    }}
+                        onPress={() => goToRecipe(dish.id)}
+                        key={dish.id}
+                    >
+                        <Image source={{ uri: dish.imageUri }} style={{ width: '100%', height: '100%', resizeMode: 'stretch', }} />
+                        <LinearGradient
+                            // Background Linear Gradient
+                            colors={['transparent', 'rgba(0,0,0,0.8)']}
+                            style={styles.background}
+                        />
+                        <Text style={styles.dishText}>
+                            {dish.name + '\n'}
+                            <TimeIcon name="clock-time-four" size={15} color="white" />
+                            {' ' + dish.time + ' phút'}
                         </Text>
                     </TouchableOpacity>
                 ))}
@@ -130,10 +126,12 @@ const styles = StyleSheet.create({
     center: {
         flex: 1,
         justifyContent: 'flex-start',
-        alignItems: "center"
+        alignItems: "center",
         // backgroundColor: '#fff',
         // padding: 20,
         // margin: 10,
+        borderWidth: 1,
+        borderColor: 'red',
     },
     tinyLogo: {
         width: 10,
@@ -184,6 +182,25 @@ const styles = StyleSheet.create({
     button: {
         fontFamily: 'Nunito_400Regular',
         color: '#D08D2F'
+    },
+    dishText: {
+        position: 'absolute',
+        bottom: 10, // adjust for desired padding
+        left: 10, // adjust for desired padding
+        zIndex: 10, // ensure text overlaps image
+        textAlign: 'left',
+        color: 'white',
+        textShadowColor: 'black', // outline color
+        textShadowRadius: 3, // outline width
+        fontSize: 15,
+    },
+    background: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        // top: 'auto',
+        bottom: 0,
+        height: '40%',
     },
 });
 export default DishList;
