@@ -1,6 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ImageBackground } from "react-native";
-// import { useFonts, Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput, Pressable, ScrollView, Keyboard, ImageBackground } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import useStore from "../ZuStand/useStore";
