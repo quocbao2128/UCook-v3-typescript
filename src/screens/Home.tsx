@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput, Pressable, ScrollView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ImageBackground } from "react-native";
 // import { useFonts, Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito';
-import { openCamera } from "./CameraCapture";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import useStore from "../ZuStand/useStore";
@@ -25,14 +24,27 @@ const Home = () => {
         if (!text) {
             handleNavigate('NotIdentifiable');
         } else {
-            const response = await fetch(`https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList/${text}`);
+            const jsonData ={
+                userinput: text
+            }
+            const response = await fetch('https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList/userInput',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify(jsonData)
+            });
             if(response.status != 200){
                 handleNavigate('NotIdentifiable');
             }
             else{
                 const responseData = await response.json();
-                updateSharedValue(responseData);
-                handleNavigate('DishList');
+                const dishes = responseData.dishes;
+                if(dishes === undefined || dishes.length == 0){
+                    handleNavigate('NotIdentifiable');
+                }
+                else{updateSharedValue(responseData);
+                handleNavigate('DishList');}
             }
         }
     };
