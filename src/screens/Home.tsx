@@ -11,7 +11,7 @@ const Home = () => {
     const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
     const [image, setImage] = useState<string | null>(null);
-    const {sharedValue,updateSharedValue} = useStore();
+    const { sharedValue, updateSharedValue } = useStore();
 
     const handleNavigate = (toPage: string) => {
         navigation.navigate(toPage as never);
@@ -26,10 +26,10 @@ const Home = () => {
             handleNavigate('NotIdentifiable');
         } else {
             const response = await fetch(`https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList/${text}`);
-            if(response.status != 200){
+            if (response.status != 200) {
                 handleNavigate('NotIdentifiable');
             }
-            else{
+            else {
                 const responseData = await response.json();
                 updateSharedValue(responseData);
                 handleNavigate('DishList');
@@ -57,7 +57,12 @@ const Home = () => {
                         <Text style={[styles.baseText, styles.orText]}>{'hoặc'}</Text>
                     </View>
                     <View style={styles.bottom}>
-                        <ScrollView keyboardShouldPersistTaps='always' style={styles.safeView}>
+                        <ScrollView
+                            keyboardShouldPersistTaps='always'
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            style={styles.safeView}
+                        >
                             <TextInput
                                 style={[styles.baseText, styles.input, { height: 50 }]}
                                 onChangeText={text => onChangeText(text)}
