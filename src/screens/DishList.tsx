@@ -20,23 +20,26 @@ const DishList = () =>{
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList/1');
-                const data = await response.json();
+                const data = sharedValue;
                 dishesData = data.dishes;
                 await Promise.all(dishesData.map(async (dish: Dish) => {
                     const filename = `dish_${dish.id}.jpg`;
                     const filePath = FileSystem.cacheDirectory + filename;
                     const info = await FileSystem.getInfoAsync(filePath);
-                    //   if(!info.exists){
-                    await FileSystem.downloadAsync(
+                    if(!info.exists){
+                        await FileSystem.downloadAsync(
                         `https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishImage/${dish.id}`,
                         filePath
-                    )
+                        )  
                         .then(({ uri }) => {
                             console.log('Finished downloading to ', uri);
                             dish.imageUri = filePath;
-                        })
-                    //   }
+                        });
+                    }
+                    else
+                    {
+                        dish.imageUri = filePath;
+                    }
                 })
                 );
                 setDishes(dishesData);
@@ -65,7 +68,7 @@ const DishList = () =>{
 
     return (
         <View style={styles.center}>
-            <View style={{ height: 100 }} />
+            <View style={{ height: 50 }} />
             <View style={styles.title}>
                 <Text style={[styles.baseText, styles.titleText]}>Danh sách các món ăn dựa trên nguyên liệu</Text>
             </View>

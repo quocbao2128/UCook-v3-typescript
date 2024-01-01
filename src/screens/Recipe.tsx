@@ -46,7 +46,10 @@ const Recipe = () => {
 
   return (
     <View style={styles.center}>
-      <View style={{ height: 100 }} />
+      <View style={{ height: 50 }} />
+      <View style={styles.title}>
+                <Text style={[styles.baseText, styles.titleText]}>Công thức món ăn</Text>
+            </View>
       <ScrollView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
         {lines.map((line, index) => (
           <Text key={index} style={{ fontSize: 20, lineHeight: 30 }}>{line}</Text>
@@ -74,54 +77,62 @@ const Recipe = () => {
 }
 const styles = StyleSheet.create({
   center: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: "center"
-    // backgroundColor: '#fff',
-    // padding: 20,
-    // margin: 10,
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: "center"
+      // backgroundColor: '#fff',
+      // padding: 20,
+      // margin: 10,
   },
   tinyLogo: {
-    width: 10,
-    height: 10,
+      width: 10,
+      height: 10,
   },
   logo: {
-    width: 100,
-    height: 100,
+      width: 100,
+      height: 100,
   },
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
   },
   top: {
-    flex: 0.4,
-    // backgroundColor: 'grey',
-    // borderWidth: 10,
-    // borderTopLeftRadius: 20,
-    // borderTopRightRadius: 20,
+      flex: 0.4,
+      // backgroundColor: 'grey',
+      // borderWidth: 10,
+      // borderTopLeftRadius: 20,
+      // borderTopRightRadius: 20,
   },
   middle: {
-    flex: 0.6,
-    // backgroundColor: 'beige',
-    // borderWidth: 5,
+      flex: 0.6,
+      // backgroundColor: 'beige',
+      // borderWidth: 5,
   },
   bottom: {
-    flex: 0.1,
-    backgroundColor: 'pink',
-    borderWidth: 5,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+      flex: 0.1,
+      backgroundColor: 'pink',
+      borderWidth: 5,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
   },
   baseText: {
-    fontFamily: 'Nunito_400Regular',
-    textAlign: "center",
-    fontSize: 20
+      fontFamily: 'Nunito_400Regular',
+      textAlign: "center",
+      fontSize: 20,
+  },
+  title: {
+      marginTop: '5%',
+      marginBottom: '5%',
+  },
+  titleText: {
+      fontSize: 24,
+      // padding: '90%',
   },
   button: {
-    fontFamily: 'Nunito_400Regular',
-    color: '#D08D2F'
+      fontFamily: 'Nunito_400Regular',
+      color: '#D08D2F'
   },
 });
 export default Recipe;

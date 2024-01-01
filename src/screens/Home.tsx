@@ -4,25 +4,20 @@ import { View, Button, Text, StyleSheet, Image, SafeAreaView, TextInput, Pressab
 import { openCamera } from "./CameraCapture";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import useStore from "../ZuStand/useStore";
+
 
 const Home = () => {
     const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
     const [image, setImage] = useState<string | null>(null);
-
-    // const pickImage = async () => {
-    //     const uri = await openCamera();
-    //     if (uri) {
-    //         setImage(uri);
-    //         handleNavigate();
-    //     }
-    // };
+    const {sharedValue,updateSharedValue} = useStore();
 
     const handleNavigate = (toPage: string) => {
         navigation.navigate(toPage as never);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         //* TODO: call API to get dish list by text input value
         console.log('>>>text input value:', text);
         Keyboard.dismiss();
@@ -30,8 +25,15 @@ const Home = () => {
         if (!text) {
             handleNavigate('NotIdentifiable');
         } else {
-            //* else go to Dish list screen
-            handleNavigate('DishList');
+            const response = await fetch(`https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList/${text}`);
+            if(response.status != 200){
+                handleNavigate('NotIdentifiable');
+            }
+            else{
+                const responseData = await response.json();
+                updateSharedValue(responseData);
+                handleNavigate('DishList');
+            }
         }
     };
     return (

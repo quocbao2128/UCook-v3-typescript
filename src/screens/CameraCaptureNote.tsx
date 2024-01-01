@@ -3,17 +3,37 @@ import { View, Text, StyleSheet, Pressable, ScrollView, Keyboard, ImageBackgroun
 import { openCamera } from "./CameraCapture";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import FormData from 'form-data';
+import useStore from "../ZuStand/useStore";
 
 const CameraCaptureNote = () => {
     const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
     const [image, setImage] = useState<string | null>(null);
+    const {sharedValue,updateSharedValue} = useStore();
 
     const pickImage = async () => {
         const uri = await openCamera();
         if (uri) {
             setImage(uri);
-            handleNavigate('DishList');
+            const formData = new FormData();
+            formData.append('image', {
+            uri: uri, // Assuming filePath holds the correct image path from sharedValue
+            name: `capture.jpg`,
+            type: 'image/jpeg', // Adjust if necessary
+            });
+            const response = await fetch('https://u-cook-7dab6b2bf1a6.herokuapp.com/api/dishList',{
+                method:'POST',
+                body:formData
+            })
+            if(!response.ok){
+                handleNavigate('NotIdentifiable');
+            }
+            else{
+                const responseData = await response.json();
+                updateSharedValue(responseData);
+                handleNavigate('DishList');
+            }
         }
     };
 
