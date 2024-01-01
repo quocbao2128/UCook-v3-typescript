@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         // marginTop: '10%',
         // borderWidth: 1,
         // borderColor: 'red',
-        width: '80%',
+        width: '85%',
         height: 80,
         // alignItems: 'center',
         // justifyContent: 'center',
