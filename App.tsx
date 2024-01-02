@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   // chi hien thi cac trang onboarding khi chay app lan dau
-  const [firstLaunch, setFirstLaunch] = React.useState<boolean>();
+  const [firstLaunch, setFirstLaunch] = React.useState<boolean>(true);
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_600SemiBold,
@@ -28,17 +28,6 @@ const App = () => {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
-
-    async function setData() {
-      const appData = await AsyncStorage.getItem("appLaunched");
-      if (appData == null) {
-        setFirstLaunch(true);
-        AsyncStorage.setItem("appLaunched", "false");
-      } else {
-        setFirstLaunch(false);
-      }
-    }
-    setData();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -51,17 +40,9 @@ const App = () => {
     return null;
   }
   return (
-    firstLaunch != null && (
-      <NavigationContainer onReady={onLayoutRootView}>
-        {firstLaunch && (
-          <Stack.Screen
-            name="Onboarding"
-            component={Onboarding}
-          />
-        )}
-        <MainStackNavigator></MainStackNavigator>
-      </NavigationContainer>
-    )
+    <NavigationContainer onReady={onLayoutRootView}>
+      <MainStackNavigator></MainStackNavigator>
+    </NavigationContainer>
   );
 }
 
