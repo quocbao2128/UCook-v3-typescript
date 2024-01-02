@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView, Keyboard, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable, ScrollView, ImageBackground, TouchableOpacity } from "react-native";
 import { openCamera } from "./CameraCapture";
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
