@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
+import "react-native-reanimated";
+import "react-native-safe-area-context";
+import "react-native-screens";
 import React, { useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { MainStackNavigator } from './src/navigation/StackNavigator';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Onboarding from './src/screens/Onboarding';
 import { useFonts, Nunito_400Regular, Nunito_600SemiBold } from '@expo-google-fonts/nunito';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -16,8 +17,6 @@ SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  // chi hien thi cac trang onboarding khi chay app lan dau
-  const [firstLaunch, setFirstLaunch] = React.useState<boolean>(true);
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_600SemiBold,
