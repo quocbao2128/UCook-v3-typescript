@@ -4,12 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import useStore from "../ZuStand/useStore";
 
-
 const Home = () => {
     const navigation = useNavigation();
     const [text, onChangeText] = React.useState('');
     const [image, setImage] = useState<string | null>(null);
     const { sharedValue, updateSharedValue } = useStore();
+    const [hideBtn, setHideBtn] = useState(false);
 
     const handleNavigate = (toPage: string) => {
         navigation.navigate(toPage as never);
@@ -17,7 +17,6 @@ const Home = () => {
 
     const handleSubmit = async () => {
         //* TODO: call API to get dish list by text input value
-        console.log('>>>text input value:', text);
         Keyboard.dismiss();
         //* if does not recognize the ingredients of empty text input
         if (!text) {
@@ -57,19 +56,19 @@ const Home = () => {
                         <View style={styles.titleOption}>
                             <Text style={[styles.baseText, styles.titleText]}>{'Bạn muốn tìm nguyên liệu bằng cách nào?'}</Text>
                         </View>
-                        <View style={styles.usecameraBtn}>
+                        {!hideBtn && <View style={styles.usecameraBtn}>
                             <Pressable style={styles.button}
                                 onPress={() => handleNavigate('CameraCaptureNote')}>
                                 <Text style={[styles.baseText, styles.buttonText]}>
                                     {'Sử dụng camera điện thoại'}
                                 </Text>
                             </Pressable>
-                        </View>
+                        </View>}
                     </View>
-                    <View style={styles.orView}>
+                    {!hideBtn && <View style={styles.orView}>
                         <Text style={[styles.baseText, styles.orText]}>{'hoặc'}</Text>
-                    </View>
-                    <View style={styles.bottom}>
+                    </View>}
+                    <View style={[styles.bottom]}>
                         <ScrollView
                             keyboardShouldPersistTaps='always'
                             showsVerticalScrollIndicator={false}
@@ -78,6 +77,8 @@ const Home = () => {
                             <TextInput
                                 style={[styles.baseText, styles.input, { height: 50 }]}
                                 onChangeText={text => onChangeText(text)}
+                                onFocus={() => setHideBtn(true)}
+                                onEndEditing={() => setTimeout(() => setHideBtn(false), 100)}
                                 value={text}
                                 placeholder='Nhập một tên nguyên liệu'
                                 keyboardType='default'
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // flexDirection: 'column',
         // justifyContent: 'space-between',
-        // borderWidth: 1,
+        // borderWidth: 5,
         // borderColor: 'red',
         // marginTop: '15%',
         // backgroundColor: '#fff',
@@ -113,9 +114,10 @@ const styles = StyleSheet.create({
     },
     image: {
         flex: 1,
+        // height: '100%',
         justifyContent: 'center',
-        // borderWidth: 1,
-        // borderColor: 'blue',
+        // borderWidth: 3,
+        // borderColor: 'green',
     },
     innerView: {
         flex: 1,
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         width: '100%',
         // flex: 1,
-        // flexDirection: 'column',
+        flexDirection: 'column',
         // justifyContent: 'center',
         alignItems: 'center',
     },
@@ -145,15 +147,15 @@ const styles = StyleSheet.create({
         height: 80,
         // alignItems: 'center',
         // justifyContent: 'center',
-        marginBottom: '20%',
+        // marginBottom: '25%',
     },
     titleText: {
         fontSize: 24,
         // padding: '90%',
     },
     usecameraBtn: {
-        flex: 0.4,
-        height: '20%',
+        // flex: 0.35,
+        height: 55,
         width: '80%',
         // borderWidth: 1,
         // borderColor: 'blue',
@@ -180,16 +182,17 @@ const styles = StyleSheet.create({
         width: "auto",
     },
     bottom: {
-        // flex: 1,
+        // flex: 0.1,
         flexDirection: 'row',
         // backgroundColor: 'pink',
         // borderWidth: 1,
         // borderBottomLeftRadius: 20,
         // borderBottomRightRadius: 20,
         // borderWidth: 1,
-        // marginTop: '5%',
-        // height: '50%',
+        // marginTop: 'auto',
+        // marginBottom: '65%',
         width: "80%",
+        height: 55,
         // alignItems: 'center',
     },
     safeView: {
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 1,
         borderColor: '#D08D2F',
-        height: 50,
+        height: '100%',
         width: '100%',
         // alignSelf: 'flex-start',
         // marginTop: "10%",
@@ -223,8 +226,8 @@ const styles = StyleSheet.create({
         right: '0%'
     },
     searchBtn: {
-        width: 50,
-        height: 50,
+        width: 55,
+        height: 55,
         // borderWidth: 1,
         // marginTop: "0%",
         // marginLeft: '25%',

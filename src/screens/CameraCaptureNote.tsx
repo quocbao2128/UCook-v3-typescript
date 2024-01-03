@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
         // padding: '90%',
     },
     usecameraBtn: {
-        flex: 0.25,
-        height: '20%',
+        // flex: 0.25,
+        height: 55,
         width: '80%',
         // borderWidth: 1,
         // borderColor: 'green',

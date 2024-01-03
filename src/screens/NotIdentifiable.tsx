@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     innerView: {
         flex: 1,
         // position: 'absolute',
-        marginTop: '15%',
+        marginTop: '10%',
         // flexDirection: 'column',
         // width: '100%',
         alignItems: "center",
@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
         // marginTop: '10%',
         // borderWidth: 1,
         // borderColor: 'red',
-        width: '80%',
-        height: 80,
+        width: '90%',
+        height: 100,
         // alignItems: 'center',
         // justifyContent: 'center',
         marginBottom: '20%',
@@ -98,6 +98,10 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: 24,
         // padding: '90%',
+        // borderWidth: 2,
+        // borderColor: 'blue',
+        height: '100%',
+        width: '100%'
     },
     usecameraBtn: {
         // flex: 0.7,
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
     },
     fileIcon: {
-        // borderWidth: 1,
+        // borderWidth: 3,
         // borderColor: 'pink',
         // borderRadius: 50,
         // overflow: "hidden"

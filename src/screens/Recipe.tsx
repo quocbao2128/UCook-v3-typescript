@@ -48,7 +48,7 @@ const Recipe = () => {
       <View style={styles.title}>
         <Text style={[styles.baseText, styles.titleText]}>Công thức món ăn</Text>
       </View>
-      <ScrollView style={{ flex: 1, paddingLeft: 10, paddingRight: 10 }}>
+      <ScrollView style={{ flex: 1, paddingLeft: '7%', paddingRight: '7%' }}>
         {lines.map((line, index) => (
           <Text key={index} style={{ fontSize: 20, lineHeight: 30 }}>{line}</Text>
         ))}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   title: {
-    marginTop: '5%',
+    marginTop: '8%',
     marginBottom: '5%',
   },
   titleText: {
