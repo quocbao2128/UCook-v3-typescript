@@ -5,9 +5,9 @@
 - Responsibilities:
    - Implement mobile application interface.
    - Manage project tasks using Jira tool.
-- Contribute content to the group workspace on Confluence tool.
-- Visually simulate the application with Figma.
-- Build the apk file for the app using Expo.
+   - Contribute content to the group workspace on Confluence tool.
+   - Visually simulate the application with Figma.
+   - Build the apk file for the app using Expo.
 - Tech stack: React Native, TypeScript, Expo, Jira, Confluence, Figma.
 
 # How to run:
